@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="warm">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>لقمة | تجربة سينمائية حقيقية من المطبخ لبابك</title>
+  
+  <meta name="description" content="موقع مطعم لقمة - استمتع برحلة تفاعلية مع السكرول لمشاهدة تحضير وتجميع وجبات البرجر والبيتزا والبروستد طبقة بطبقة حتى التغليف والتوصيل.">
+
+  <!-- Modern Arabic & Display Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Warm Appetite Palette (كريمي دافئ، ذهبي شهي، وبني محمص فاخر) */
+      --bg: #fff9f2;
+      --bg-alt: #fef1df;
+      --surface: #ffffff;
+      --surface-glass: rgba(255, 255, 255, 0.88);
+      
+      --fg-title: #2a160b;
+      --fg-body: #5a3e2e;
+      --fg-muted: #8e7362;
+      
+      --accent: #f48c06;
+      --accent-deep: #e85d04;
+      --accent-gold: #f59e0b;
+      --accent-glow: rgba(244, 140, 6, 0.3);
+      
+      --border-warm: rgba(142, 115, 98, 0.2);
+      --border-active: rgba(244, 140, 6, 0.45);
+      
+      --shadow-soft: 0 14px 40px rgba(42, 22, 11, 0.08);
+      --shadow-float: 0 24px 60px rgba(42, 22, 11, 0.16);
+      
+      --radius-sm: 8px;
+      --radius-md: 18px;
+      --radius-lg: 32px;
+      --radius-full: 9999px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #130d09;
+      --bg-alt: #1c140e;
+      --surface: #241a13;
+      --surface-glass: rgba(36, 26, 19, 0.88);
+      --fg-title: #fff7ee;
+      --fg-body: #e6d3c4;
+      --fg-muted: #ad9482;
+      --border-warm: rgba(255, 255, 255, 0.12);
+      --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.4);
+      --shadow-float: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      background: var(--bg);
+      color: var(--fg-body);
+      font-family: 'Tajawal', system-ui, sans-serif;
+      overflow-x: clip;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    /* Scroll progress indicator */
+    #topProgressBar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 4px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-deep), var(--accent-gold));
+      box-shadow: 0 0 12px var(--accent-glow);
+      z-index: 10000;
+    }
+
+    /* Fixed Navigation Header */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 16px 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9000;
+      background: var(--surface-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-warm);
+      box-shadow: var(--shadow-soft);
+      transition: background 0.3s ease;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--fg-title);
+    }
+
+    .brand-name {
+      font-size: 2.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-deep));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-sub {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--accent);
+      background: var(--bg-alt);
+      border: 1px solid var(--border-warm);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .action-circle-btn {
+      background: var(--surface);
+      border: 1px solid var(--border-warm);
+      color: var(--fg-title);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.15rem;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-soft);
+    }
+    .action-circle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    .btn-order-header {
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-deep));
+      color: #ffffff;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      border: 0;
+      padding: 10px 24px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 18px var(--accent-glow);
+      transition: all 0.25s ease;
+    }
+    .btn-order-header:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(244, 140, 6, 0.45);
+    }
+
+    /* ========================================================
+       HERO OPENING SECTION
+       ======================================================== */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 6vw 60px;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border-active);
+      color: var(--accent);
+      font-size: 0.95rem;
+      font-weight: 800;
+      padding: 6px 20px;
+      border-radius: var(--radius-full);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-title {
+      font-size: clamp(3.4rem, 10vw, 7.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--fg-title);
+      margin-bottom: 20px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-deep) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: clamp(1.2rem, 3vw, 1.65rem);
+      color: var(--fg-body);
+      max-width: 680px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      font-weight: 500;
+    }
+
+    .scroll-down-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 1.05rem;
+      background: var(--surface);
+      padding: 14px 28px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-warm);
+      box-shadow: var(--shadow-soft);
+      transition: all 0.25s ease;
+    }
+    .scroll-down-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-float);
+    }
+    .mouse-wheel-anim {
+      width: 24px;
+      height: 38px;
+      border: 2px solid var(--accent);
+      border-radius: 14px;
+      position: relative;
+    }
+    .mouse-wheel-anim::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+      animation: mouseWheel 1.5s infinite;
+    }
+    @keyframes mouseWheel {
+      0% { top: 6px; opacity: 1; }
+      100% { top: 20px; opacity: 0; }
+    }
+
+    /* ========================================================
+       SCROLL-DRIVEN SCENES CONTAINER
+       ======================================================== */
+    .scene-block {
+      position: relative;
+      /* 380vh gives enough comfortable scroll distance for each meal */
+      height: 380vh;
+      background: var(--bg);
+      border-top: 1px solid var(--border-warm);
+    }
+
+    .scene-sticky-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      align-items: center;
+      padding: 0 6vw;
+      overflow: hidden;
+      perspective: 1200px;
+    }
+
+    /* HUD Narrative Column */
+    .stage-hud {
+      max-width: 500px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hud-step-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--accent);
+      background: var(--bg-alt);
+      border: 1px solid var(--border-active);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      width: fit-content;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hud-step-tag .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .hud-meal-title {
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--fg-title);
+    }
+
+    .hud-price-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hud-price-pill {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-deep));
+      padding: 6px 22px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 4px 18px var(--accent-glow);
+    }
+
+    .hud-card {
+      background: var(--surface);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+
+    .hud-step-name {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--fg-title);
+      margin-bottom: 8px;
+    }
+
+    .hud-step-desc {
+      font-size: 1.1rem;
+      color: var(--fg-body);
+      line-height: 1.6;
+    }
+
+    /* Timeline Stepper indicator */
+    .hud-timeline-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .hud-timeline-dots .dot {
+      flex: 1;
+      height: 6px;
+      border-radius: 4px;
+      background: rgba(142, 115, 98, 0.2);
+      transition: all 0.25s ease;
+    }
+    .hud-timeline-dots .dot.active {
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .btn-quick-order {
+      background: var(--bg-alt);
+      color: var(--fg-title);
+      border: 1px solid var(--border-warm);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: fit-content;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-soft);
+    }
+    .btn-quick-order:hover {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* 3D Food Stage Viewport */
+    .stage-food-viewport {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+    }
+
+    .food-3d-wrapper {
+      position: relative;
+      width: min(520px, 80vw);
+      height: min(520px, 80vw);
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .ground-ambient-shadow {
+      position: absolute;
+      bottom: 6%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 360px;
+      height: 65px;
+      background: radial-gradient(ellipse, rgba(42, 22, 11, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      transition: transform 0.15s linear;
+    }
+
+    .photo-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      will-change: transform, opacity;
+      transform-origin: center center;
+    }
+
+    .photo-layer img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 26px rgba(42, 22, 11, 0.18));
+      user-select: none;
+    }
+
+    /* Z-index layering for food nesting into packaging */
+    #b-box-open, #p-box-open, #br-box-open {
+      z-index: 2;
+    }
+    #b-bun-bottom, #b-lettuce, #b-patty, #b-cheese, #b-bun-top, #p-full, #br-full {
+      z-index: 10;
+    }
+    #b-box-closed, #p-box-closed, #br-box-closed {
+      z-index: 30;
+    }
+
+    /* OUTRO & DELIVERY */
+    .outro-section {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 90px 6vw;
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border-warm);
+    }
+
+    .outro-badge {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .outro-title {
+      font-size: clamp(2.6rem, 7vw, 5.2rem);
+      font-weight: 900;
+      color: var(--fg-title);
+      margin-bottom: 18px;
+    }
+
+    .outro-desc {
+      font-size: 1.35rem;
+      color: var(--fg-body);
+      max-width: 650px;
+      margin-bottom: 40px;
+    }
+
+    .perks-trio {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      max-width: 960px;
+      width: 100%;
+      margin-bottom: 48px;
+    }
+
+    .perk-box {
+      background: var(--surface);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+    .perk-box .icon {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+    }
+    .perk-box h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--fg-title);
+      margin-bottom: 8px;
+    }
+    .perk-box p {
+      font-size: 0.95rem;
+      color: var(--fg-body);
+    }
+
+    /* SLIDE-OUT CART DRAWER */
+    .cart-drawer-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(42, 22, 11, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 12000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .cart-drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-drawer-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: min(500px, 92vw);
+      height: 100vh;
+      background: var(--surface);
+      box-shadow: 15px 0 50px rgba(0, 0, 0, 0.25);
+      z-index: 12100;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-drawer-backdrop.open .cart-drawer-panel {
+      transform: translateX(0%);
+    }
+
+    .drawer-top-row {
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-warm);
+    }
+    .drawer-top-row h3 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--fg-title);
+    }
+    .drawer-close-btn {
+      background: var(--bg-alt);
+      border: 0;
+      font-size: 1.2rem;
+      color: var(--fg-title);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-items-box {
+      padding: 24px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .cart-row-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-warm);
+    }
+    .cart-row-img {
+      width: 65px;
+      height: 65px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+    }
+    .cart-row-info {
+      flex: 1;
+    }
+    .cart-row-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--fg-title);
+    }
+    .cart-row-price {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .cart-counter {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-full);
+      padding: 3px 8px;
+      gap: 8px;
+    }
+    .counter-btn {
+      background: transparent;
+      border: 0;
+      font-size: 1.1rem;
+      font-weight: 900;
+      cursor: pointer;
+      color: var(--fg-title);
+      width: 22px;
+      height: 22px;
+    }
+
+    .cart-drawer-foot {
+      padding: 24px;
+      border-top: 1px solid var(--border-warm);
+      background: var(--bg-alt);
+    }
+
+    .cart-summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 1rem;
+      color: var(--fg-muted);
+    }
+    .cart-summary-line.grand {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--fg-title);
+      border-top: 1px solid var(--border-warm);
+      padding-top: 12px;
+      margin-top: 12px;
+      margin-bottom: 18px;
+    }
+
+    .btn-submit-whatsapp {
+      width: 100%;
+      background: #25d366;
+      color: #ffffff;
+      border: 0;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+      padding: 16px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+      transition: all 0.25s ease;
+    }
+    .btn-submit-whatsapp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 900px) {
+      .scene-sticky-stage {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        padding-top: 80px;
+        align-content: center;
+      }
+      .stage-hud {
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+      }
+      .hud-price-row {
+        justify-content: center;
+      }
+      .btn-quick-order {
+        margin: 0 auto;
+      }
+      .food-3d-wrapper {
+        width: min(360px, 75vw);
+        height: min(360px, 75vw);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="topProgressBar"></div>
+
+  <!-- Site Navigation -->
+  <header class="site-header">
+    <a href="#" class="brand-group">
+      <span class="brand-name">لقمة</span>
+      <span class="brand-sub">من المطبخ لبابك 🛵</span>
+    </a>
+
+    <div class="nav-actions">
+      <button class="action-circle-btn" id="themeBtn" title="تغيير المظهر (فاتح / داكن)" aria-label="تبديل الثيم">
+        ☀️
+      </button>
+      <button class="action-circle-btn" id="soundBtn" title="تشغيل / كتم المؤثرات الصوتية" aria-label="تبديل الصوت">
+        🔊
+      </button>
+      <button class="btn-order-header" onclick="openCart()">
+        <span>سلة الطلب</span>
+        <span id="cartCountBadge" style="background:#fff; color:var(--accent-deep); border-radius:50%; width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center; font-size:0.8rem;">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========================================================
+         HERO SECTION
+         ======================================================== -->
+    <section class="hero-section" id="heroSection">
+      <div class="hero-eyebrow">
+        <span>✨</span>
+        <span>تجربة طهي سينمائية حية • سكرول وشوف أكلك يتجهز</span>
+      </div>
+
+      <h1 class="hero-title">
+        طعم حقيقي من <span>لقمة</span>
+      </h1>
+      <p class="hero-desc">
+        حرّك عجلة الماوس أو اسحب شاشتك لترى كيف تتجمع وجبتك طبقة بطبقة في الهواء، وتُغلّف في بوكس لقمة الحراري الفاخر لتنطلق لباب بيتك!
+      </p>
+
+      <div class="scroll-down-card" onclick="scrollToScene(1)">
+        <div class="mouse-wheel-anim"></div>
+        <span>اسكرول للأسفل لبدء التجميع</span>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SCENE 1: برجر لقمة أنجوس (SCROLL-BOUND)
+         ======================================================== -->
+    <section class="scene-block" id="sceneBurger">
+      <div class="scene-sticky-stage">
+        
+        <!-- HUD Narrative -->
+        <div class="stage-hud">
+          <div class="hud-step-tag">
+            <div class="pulse-dot"></div>
+            <span id="burgerStepTag">الخطوة ١ من ٦</span>
+          </div>
+
+          <h2 class="hud-meal-title">برجر لقمة أنجوس</h2>
+
+          <div class="hud-price-row">
+            <span class="hud-price-pill">٢٨ ر.س</span>
+            <span style="font-weight:700; color:var(--fg-muted);">⏱️ تحضير فوري على اللهب</span>
+          </div>
+
+          <div class="hud-card">
+            <h3 class="hud-step-name" id="burgerStepName">قاعدة البريوش المحمصة</h3>
+            <p class="hud-step-desc" id="burgerStepDesc">
+              خبز بريوش طازج محمص بزبدة طبيعية فاخرة على حرارة هادئة ليعطي قواماً متماسكاً وطراوة لا تقاوم.
+            </p>
+          </div>
+
+          <!-- Stepper Dots -->
+          <div class="hud-timeline-dots" id="burgerDots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+
+          <button class="btn-quick-order" onclick="addToCart('burger', 'برجر لقمة أنجوس الفاخر', 28, 'assets/burger_hero.jpg')">
+            <span>أضف البرجر للطلب (٢٨ ر.س)</span>
+            <span>🛒</span>
+          </button>
+        </div>
+
+        <!-- 3D Physics Layers Viewport -->
+        <div class="stage-food-viewport">
+          <div class="food-3d-wrapper" id="burger3D">
+            <div class="ground-ambient-shadow" id="burgerShadow"></div>
+
+            <!-- Photorealistic Transparent Layers -->
+            <div class="photo-layer" id="b-bun-bottom">
+              <img src="assets/bun_bottom.png" alt="قاعدة البريوش">
+            </div>
+
+            <div class="photo-layer" id="b-lettuce">
+              <img src="assets/lettuce_tomato.png" alt="الخس المقرمش والطماطم">
+            </div>
+
+            <div class="photo-layer" id="b-patty">
+              <img src="assets/patty.png" alt="شريحة أنجوس مشوية">
+            </div>
+
+            <div class="photo-layer" id="b-cheese">
+              <img src="assets/cheese.png" alt="شيدر ذائبة وصوص لقمة">
+            </div>
+
+            <div class="photo-layer" id="b-bun-top">
+              <img src="assets/bun_top.png" alt="تاج البريوش بالسمسم">
+            </div>
+
+            <!-- Packaging Box -->
+            <div class="photo-layer" id="b-box-open" style="opacity:0;">
+              <img src="assets/box_open.png" alt="صندوق لقمة مفتوح">
+            </div>
+
+            <div class="photo-layer" id="b-box-closed" style="opacity:0;">
+              <img src="assets/box_closed.png" alt="صندوق لقمة مغلق ومختوم">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SCENE 2: بيتزا لقمة الإيطالية (SCROLL-BOUND)
+         ======================================================== -->
+    <section class="scene-block" id="scenePizza">
+      <div class="scene-sticky-stage">
+        
+        <!-- HUD Narrative -->
+        <div class="stage-hud">
+          <div class="hud-step-tag">
+            <div class="pulse-dot"></div>
+            <span id="pizzaStepTag">الخطوة ١ من ٤</span>
+          </div>
+
+          <h2 class="hud-meal-title">بيتزا لقمة الإيطالية</h2>
+
+          <div class="hud-price-row">
+            <span class="hud-price-pill">٣٤ ر.س</span>
+            <span style="font-weight:700; color:var(--fg-muted);">🍕 عجينة نابولية مخمرة ٤٨ ساعة</span>
+          </div>
+
+          <div class="hud-card">
+            <h3 class="hud-step-name" id="pizzaStepName">فرد العجينة والخبز الحجري</h3>
+            <p class="hud-step-desc" id="pizzaStepDesc">
+              عجينة نابولية إيطالية مفرودة يدوياً ومخبوزة على حجر ناري لتعطي أطرافاً منتفخة ومقرمشة.
+            </p>
+          </div>
+
+          <!-- Stepper Dots -->
+          <div class="hud-timeline-dots" id="pizzaDots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+
+          <button class="btn-quick-order" onclick="addToCart('pizza', 'بيتزا لقمة الإيطالية الفاخرة', 34, 'assets/pizza_hero.jpg')">
+            <span>أضف البيتزا للطلب (٣٤ ر.س)</span>
+            <span>🛒</span>
+          </button>
+        </div>
+
+        <!-- 3D Physics Viewport -->
+        <div class="stage-food-viewport">
+          <div class="food-3d-wrapper" id="pizza3D">
+            <div class="ground-ambient-shadow" id="pizzaShadow"></div>
+
+            <!-- Pizza Main Layer -->
+            <div class="photo-layer" id="p-full">
+              <img src="assets/pizza_plate.png" alt="بيتزا لقمة الإيطالية">
+            </div>
+
+            <!-- Packaging Box -->
+            <div class="photo-layer" id="p-box-open" style="opacity:0;">
+              <img src="assets/box_open.png" alt="صندوق لقمة للبيتزا">
+            </div>
+
+            <div class="photo-layer" id="p-box-closed" style="opacity:0;">
+              <img src="assets/box_closed.png" alt="صندوق لقمة مغلق">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SCENE 3: بروستد لقمة المقرمش (SCROLL-BOUND)
+         ======================================================== -->
+    <section class="scene-block" id="sceneBroast">
+      <div class="scene-sticky-stage">
+        
+        <!-- HUD Narrative -->
+        <div class="stage-hud">
+          <div class="hud-step-tag">
+            <div class="pulse-dot"></div>
+            <span id="broastStepTag">الخطوة ١ من ٤</span>
+          </div>
+
+          <h2 class="hud-meal-title">بروستد لقمة الذهبي</h2>
+
+          <div class="hud-price-row">
+            <span class="hud-price-pill">٣٢ ر.س</span>
+            <span style="font-weight:700; color:var(--fg-muted);">🍗 قرمشة ذهبية مع الثومية</span>
+          </div>
+
+          <div class="hud-card">
+            <h3 class="hud-step-name" id="broastStepName">قلي البروستد بتقنية الضغط</h3>
+            <p class="hud-step-desc" id="broastStepDesc">
+              قطع دجاج طازجة متبلة بخلطة لقمة السرية المكونة من ١٤ بهاراً ومقلية لنضمن قرمشة خفيفة وعصارة غنية.
+            </p>
+          </div>
+
+          <!-- Stepper Dots -->
+          <div class="hud-timeline-dots" id="broastDots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+
+          <button class="btn-quick-order" onclick="addToCart('broast', 'بروستد لقمة الذهبي المقرمش', 32, 'assets/broast_hero.jpg')">
+            <span>أضف البروستد للطلب (٣٢ ر.س)</span>
+            <span>🛒</span>
+          </button>
+        </div>
+
+        <!-- 3D Physics Viewport -->
+        <div class="stage-food-viewport">
+          <div class="food-3d-wrapper" id="broast3D">
+            <div class="ground-ambient-shadow" id="broastShadow"></div>
+
+            <!-- Broast Main Layer -->
+            <div class="photo-layer" id="br-full">
+              <img src="assets/broast_board.png" alt="بروستد لقمة المقرمش">
+            </div>
+
+            <!-- Packaging Box -->
+            <div class="photo-layer" id="br-box-open" style="opacity:0;">
+              <img src="assets/box_open.png" alt="صندوق لقمة للبروستد">
+            </div>
+
+            <div class="photo-layer" id="br-box-closed" style="opacity:0;">
+              <img src="assets/box_closed.png" alt="صندوق لقمة مغلق ومختوم">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         OUTRO SECTION
+         ======================================================== -->
+    <section class="outro-section">
+      <div class="outro-badge">🛵 جاهز للتوصيل الفوري</div>
+      <h2 class="outro-title">جاهز؟ طلبك في الطريق لبابك</h2>
+      <p class="outro-desc">
+        نطبخ كل وجبة بحب عند استلام الطلب مباشرة، ونغلفها بعناية في علب كرافت حرارية معقمة ومختومة لتصلك ساخنة كأنك داخل المطعم.
+      </p>
+
+      <div class="perks-trio">
+        <div class="perk-box">
+          <div class="icon">⚡</div>
+          <h3>توصيل في أقل من ٣٠ دقيقة</h3>
+          <p>أسطول توصيل مجهز بحافظات حرارية متطورة تحافظ على القرمشة والحرارة.</p>
+        </div>
+
+        <div class="perk-box">
+          <div class="icon">🥩</div>
+          <h3>لحوم ودواجن طازجة ١٠٠٪</h3>
+          <p>نعتمد على التوريد اليومي المباشر بدون تجميد أو زيوت مهدرجة.</p>
+        </div>
+
+        <div class="perk-box">
+          <div class="icon">🔒</div>
+          <h3>تغليف أمان محكم</h3>
+          <p>كل علبة تغلق بملصق أمان ذهبي لا يفتح إلا بيدك أنت.</p>
+        </div>
+      </div>
+
+      <button class="btn-order-header" style="font-size:1.2rem; padding:16px 40px;" onclick="openCart()">
+        <span>افتح سلة المشتريات وأكمل الطلب</span>
+        <span>🚀</span>
+      </button>
+
+      <div style="margin-top:50px; color:var(--fg-muted); font-size:0.95rem;">
+        © مطعم لقمة | جميع الحقوق محفوظة • مفتوح يومياً من ١٢ ظهراً حتى ٢ ليلاً
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================
+       SLIDE-OUT CART DRAWER & WHATSAPP CHECKOUT
+       ======================================================== */ -->
+  <div class="cart-drawer-backdrop" id="cartBackdrop" onclick="closeCart(event)">
+    <div class="cart-drawer-panel" onclick="event.stopPropagation()">
+      <div class="drawer-top-row">
+        <h3>سلة طلبات لقمة</h3>
+        <button class="drawer-close-btn" onclick="closeCart()">✕</button>
+      </div>
+
+      <div class="cart-items-box" id="cartItemsContainer">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="cart-drawer-foot">
+        <div class="cart-summary-line">
+          <span>المجموع الفرعي</span>
+          <span id="cartSubtotalText">٠ ر.س</span>
+        </div>
+        <div class="cart-summary-line">
+          <span>ضريبة القيمة المضافة (١٥٪)</span>
+          <span id="cartTaxText">٠ ر.س</span>
+        </div>
+        <div class="cart-summary-line grand">
+          <span>المجموع الكلي</span>
+          <span id="cartGrandTotalText" style="color:var(--accent-deep);">٠ ر.س</span>
+        </div>
+
+        <button class="btn-submit-whatsapp" onclick="sendWhatsAppCheckout()">
+          <span>تأكيد الطلب عبر واتساب</span>
+          <span>💬</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ========================================================
+       1. 100% PURE SCROLL-BOUND 3D ENGINE (1:1 SCRUBBING)
+       ======================================================== */
+    const clamp = (val, min = 0, max = 1) => Math.max(min, Math.min(max, val));
+    const easeOutBack = t => {
+      const c1 = 1.70158;
+      const c3 = c1 + 1;
+      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+    };
+    const smoothStep = t => t * t * (3 - 2 * t);
+
+    // Burger Elements
+    const sceneBurger = document.getElementById('sceneBurger');
+    const bBunBottom = document.getElementById('b-bun-bottom');
+    const bLettuce = document.getElementById('b-lettuce');
+    const bPatty = document.getElementById('b-patty');
+    const bCheese = document.getElementById('b-cheese');
+    const bBunTop = document.getElementById('b-bun-top');
+    const bBoxOpen = document.getElementById('b-box-open');
+    const bBoxClosed = document.getElementById('b-box-closed');
+    const burgerShadow = document.getElementById('burgerShadow');
+    const burger3D = document.getElementById('burger3D');
+    const burgerDots = document.querySelectorAll('#burgerDots .dot');
+
+    const burgerStepsInfo = [
+      { tag: "الخطوة ١ من ٦", name: "قاعدة البريوش المحمصة", desc: "خبز بريوش طازج محمص بزبدة طبيعية فاخرة ليعطي قواماً متماسكاً وطراوة لا تقاوم." },
+      { tag: "الخطوة ٢ من ٦", name: "الخس المقرمش وشرائح الطماطم", desc: "خس لولوروسو المقرمش مع شرائح طماطم ناضجة مروية بقطرات الندى تمنحك توازناً وانتعاشاً فريداً." },
+      { tag: "الخطوة ٣ من ٦", name: "شريحة أنجوس مشوية على اللهب", desc: "لحم أنجوس بقري فاخر ١٠٠٪ يُشوى على حرارة مدروسة ليحتفظ بكامل عصارته الطبيعية ونكهة الفحم." },
+      { tag: "الخطوة ٤ من ٦", name: "شيدر ذائبة وصوص لقمة السري", desc: "شريحة شيدر أصلية تذوب فوق اللحم الساخن لتنسجم مع صوص لقمة الغني بالبهارات المدخنة." },
+      { tag: "الخطوة ٥ من ٦", name: "تاج البريوش الذهبي بالسمسم", desc: "غطاء البريوش اللامع والمحمص يختم البرجر بانضغاط خفيف يُبرز طراوة الطبقات." },
+      { tag: "الخطوة ٦ من ٦", name: "التغليف والانطلاق للتوصيل 🛵", desc: "تستقر الوجبة داخل صندوق لقمة الحراري، يُقفل بختم الأمان الذهبي وينطلق فوراً للسائق!" }
+    ];
+
+    // Pizza Elements
+    const scenePizza = document.getElementById('scenePizza');
+    const pFull = document.getElementById('p-full');
+    const pBoxOpen = document.getElementById('p-box-open');
+    const pBoxClosed = document.getElementById('p-box-closed');
+    const pizzaShadow = document.getElementById('pizzaShadow');
+    const pizza3D = document.getElementById('pizza3D');
+    const pizzaDots = document.querySelectorAll('#pizzaDots .dot');
+
+    const pizzaStepsInfo = [
+      { tag: "الخطوة ١ من ٤", name: "فرد العجينة والخبز الحجري", desc: "عجينة نابولية إيطالية مفرودة يدوياً ومخبوزة على حجر ناري لتعطي أطرافاً منتفخة ومقرمشة." },
+      { tag: "الخطوة ٢ من ٤", name: "توزيع الصلصة والموزاريلا", desc: "صلصة طماطم إيطالية مطبوخة مع زيت الزيتون البكر ومغطاة بجبن الموزاريلا الطازج." },
+      { tag: "الخطوة ٣ من ٤", name: "شرائح البيبروني والريحان", desc: "شرائح بيبروني مقرمشة محمصة على اللهب مع أوراق ريحان إيطالي طازج لقمة لا تُنسى." },
+      { tag: "الخطوة ٤ من ٤", name: "التغليف والانطلاق للتوصيل 🛵", desc: "توضع البيتزا الساخنة في علبة لقمة الكرافت، تُقفل بالختم الذهبي وتنطلق فوراً لباب بيتك!" }
+    ];
+
+    // Broast Elements
+    const sceneBroast = document.getElementById('sceneBroast');
+    const brFull = document.getElementById('br-full');
+    const brBoxOpen = document.getElementById('br-box-open');
+    const brBoxClosed = document.getElementById('br-box-closed');
+    const broastShadow = document.getElementById('broastShadow');
+    const broast3D = document.getElementById('broast3D');
+    const broastDots = document.querySelectorAll('#broastDots .dot');
+
+    const broastStepsInfo = [
+      { tag: "الخطوة ١ من ٤", name: "قلي البروستد بتقنية الضغط", desc: "قطع دجاج طازجة متبلة بخلطة لقمة السرية المكونة من ١٤ بهاراً ومقلية لنضمن قرمشة خفيفة وعصارة غنية." },
+      { tag: "الخطوة ٢ من ٤", name: "رص البطاطس المقرمشة الساخنة", desc: "فرشة من أصابع البطاطس الذهبية المقرمشة المتبلة بملح البحر والبهارات الخاصة." },
+      { tag: "الخطوة ٣ من ٤", name: "إضافة صوص الثومية الفاخر", desc: "علبة صوص ثومية كريمية طازجة تمنح الوجبة تجانس النكهة الأصيلة التي تحبها." },
+      { tag: "الخطوة ٤ من ٤", name: "التغليف والانطلاق للتوصيل 🛵", desc: "توضع الوجبة في بوكس لقمة العائلي الحراري، يُقفل بختم الأمان وينطلق فوراً للسائق!" }
+    ];
+
+    let lastBurgerStep = -1;
+    let lastPizzaStep = -1;
+    let lastBroastStep = -1;
+
+    /* Sound flags */
+    let audioCtx = null;
+    let audioMuted = false;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function playFoleySound(freq1, freq2, duration, type = 'sine') {
+      if (audioMuted) return;
+      initAudio();
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq1, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq2, audioCtx.currentTime + duration);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration + 0.02);
+      } catch (e) {}
+    }
+
+    /* ----------------------------------------------------
+       MAIN TICK FUNCTION (1:1 DIRECT SCROLL BINDING)
+       ---------------------------------------------------- */
+    function onScrollTick() {
+      const H = window.innerHeight;
+      const scrollY = window.scrollY;
+
+      // 1. Reading Progress
+      const docHeight = document.body.scrollHeight - H;
+      const totalProg = clamp(scrollY / docHeight);
+      document.getElementById('topProgressBar').style.width = (totalProg * 100) + '%';
+
+      // ==========================================
+      // SCENE 1: BURGER (p: 0 to 1 strictly from scroll)
+      // ==========================================
+      const rB = sceneBurger.getBoundingClientRect();
+      if (rB.bottom > -100 && rB.top < H + 100) {
+        const p = clamp(-rB.top / (rB.height - H));
+
+        // Step index: 0 to 5
+        let step = 0;
+        if (p >= 0.82) step = 5;
+        else if (p >= 0.65) step = 4;
+        else if (p >= 0.48) step = 3;
+        else if (p >= 0.32) step = 2;
+        else if (p >= 0.16) step = 1;
+        else step = 0;
+
+        if (step !== lastBurgerStep) {
+          lastBurgerStep = step;
+          const info = burgerStepsInfo[step];
+          document.getElementById('burgerStepTag').textContent = info.tag;
+          document.getElementById('burgerStepName').textContent = info.name;
+          document.getElementById('burgerStepDesc').textContent = info.desc;
+          burgerDots.forEach((d, i) => d.classList.toggle('active', i === step));
+          playFoleySound(260 + step * 60, 440 + step * 40, 0.12);
+        }
+
+        // Layer 0: Bun Bottom
+        const q0 = clamp(p / 0.14);
+        const e0 = easeOutBack(q0);
+        bBunBottom.style.opacity = q0 > 0.05 ? 1 : 0;
+        bBunBottom.style.transform = `translate3d(0, ${-160 * (1 - e0)}px, 0) scale(${0.85 + 0.15 * e0})`;
+
+        // Layer 1: Lettuce & Tomato
+        const q1 = clamp((p - 0.14) / 0.16);
+        const e1 = easeOutBack(q1);
+        bLettuce.style.opacity = q1 > 0 ? 1 : 0;
+        bLettuce.style.transform = `translate3d(0, ${-260 * (1 - e1)}px, 0) rotate(${14 * (1 - e1)}deg) scale(${0.8 + 0.2 * e1})`;
+
+        // Layer 2: Angus Patty
+        const q2 = clamp((p - 0.30) / 0.16);
+        const e2 = easeOutBack(q2);
+        bPatty.style.opacity = q2 > 0 ? 1 : 0;
+        bPatty.style.transform = `translate3d(0, ${-300 * (1 - e2)}px, 0) rotate(${-10 * (1 - e2)}deg) scale(${0.8 + 0.2 * e2})`;
+
+        // Layer 3: Melted Cheese
+        const q3 = clamp((p - 0.46) / 0.16);
+        const e3 = easeOutBack(q3);
+        bCheese.style.opacity = q3 > 0 ? 1 : 0;
+        bCheese.style.transform = `translate3d(0, ${-320 * (1 - e3)}px, 0) scale(${0.85 + 0.15 * e3})`;
+
+        // Layer 4: Bun Top with Squish
+        const q4 = clamp((p - 0.62) / 0.16);
+        const e4 = easeOutBack(q4);
+        const squish = (q4 > 0.85 && q4 < 0.98) ? Math.sin((q4 - 0.85) / 0.13 * Math.PI) * 0.07 : 0;
+        bBunTop.style.opacity = q4 > 0 ? 1 : 0;
+        bBunTop.style.transform = `translate3d(0, ${-380 * (1 - e4)}px, 0) scale(${1 + squish * 0.5}, ${1 - squish})`;
+
+        // Layer 5: Packaging & Delivery Zoom
+        const q5 = clamp((p - 0.76) / 0.24);
+        if (q5 > 0) {
+          // As packaging starts, burger scales and nests down into the box cavity
+          const nestProgress = clamp(q5 / 0.4);
+          const burgerScale = 1 - 0.35 * nestProgress;
+          const burgerNestY = 40 * nestProgress;
+
+          // Open box rises up from below
+          const boxRise = clamp(q5 / 0.35);
+          bBoxOpen.style.opacity = (boxRise > 0 && q5 < 0.5) ? boxRise : 0;
+          bBoxOpen.style.transform = `translate3d(0, ${180 * (1 - smoothStep(boxRise))}px, 0) scale(1.05)`;
+
+          // Closed box appears and seals (with gold seal)
+          const q5_closed = clamp((q5 - 0.42) / 0.25);
+          bBoxClosed.style.opacity = q5_closed > 0 ? 1 : 0;
+          
+          // Whole assembled burger fades cleanly as box seals
+          const burgerFade = q5 >= 0.45 ? (1 - clamp((q5 - 0.45) / 0.1)) : 1;
+          bBunBottom.style.opacity = (q0 > 0.05 ? 1 : 0) * burgerFade;
+          bLettuce.style.opacity = (q1 > 0 ? 1 : 0) * burgerFade;
+          bPatty.style.opacity = (q2 > 0 ? 1 : 0) * burgerFade;
+          bCheese.style.opacity = (q3 > 0 ? 1 : 0) * burgerFade;
+          bBunTop.style.opacity = (q4 > 0 ? 1 : 0) * burgerFade;
+
+          // Apply nesting transform to all burger layers
+          if (nestProgress > 0) {
+            bBunBottom.style.transform = `translate3d(0, ${burgerNestY}px, 0) scale(${burgerScale})`;
+            bLettuce.style.transform = `translate3d(0, ${burgerNestY}px, 0) scale(${burgerScale})`;
+            bPatty.style.transform = `translate3d(0, ${burgerNestY}px, 0) scale(${burgerScale})`;
+            bCheese.style.transform = `translate3d(0, ${burgerNestY}px, 0) scale(${burgerScale})`;
+            bBunTop.style.transform = `translate3d(0, ${burgerNestY}px, 0) scale(${burgerScale})`;
+          }
+
+          // Delivery Launch Slide for Closed Box
+          const q5_launch = clamp((q5 - 0.68) / 0.32);
+          const launchX = -window.innerWidth * 1.2 * Math.pow(q5_launch, 2.2);
+          bBoxClosed.style.transform = `translate3d(${launchX}px, 0, 0) rotate(${-12 * q5_launch}deg) scale(1.05)`;
+        } else {
+          bBoxOpen.style.opacity = 0;
+          bBoxClosed.style.opacity = 0;
+        }
+
+        burgerShadow.style.opacity = 0.25 + 0.4 * q0 + 0.15 * q4;
+      }
+
+      // ==========================================
+      // SCENE 2: PIZZA (p: 0 to 1 strictly from scroll)
+      // ==========================================
+      const rP = scenePizza.getBoundingClientRect();
+      if (rP.bottom > -100 && rP.top < H + 100) {
+        const pP = clamp(-rP.top / (rP.height - H));
+
+        let stepP = 0;
+        if (pP >= 0.75) stepP = 3;
+        else if (pP >= 0.5) stepP = 2;
+        else if (pP >= 0.25) stepP = 1;
+        else stepP = 0;
+
+        if (stepP !== lastPizzaStep) {
+          lastPizzaStep = stepP;
+          const infoP = pizzaStepsInfo[stepP];
+          document.getElementById('pizzaStepTag').textContent = infoP.tag;
+          document.getElementById('pizzaStepName').textContent = infoP.name;
+          document.getElementById('pizzaStepDesc').textContent = infoP.desc;
+          pizzaDots.forEach((d, i) => d.classList.toggle('active', i === stepP));
+          playFoleySound(320 + stepP * 70, 520, 0.12);
+        }
+
+        // Pizza Full Plate Assembly Motion
+        const qP_main = clamp(pP / 0.45);
+        const eP_main = easeOutBack(qP_main);
+        const pScale = 0.7 + 0.3 * eP_main;
+        const pRot = 25 * (1 - eP_main);
+        const pY = -280 * (1 - eP_main);
+
+        pFull.style.opacity = qP_main > 0.05 ? 1 : 0;
+        pFull.style.transform = `translate3d(0, ${pY}px, 0) rotate(${pRot}deg) scale(${pScale})`;
+
+        // Pizza Packaging & Delivery
+        const qP_pack = clamp((pP - 0.55) / 0.45);
+        if (qP_pack > 0) {
+          const nestProgress = clamp(qP_pack / 0.35);
+          const pNestScale = 1 - 0.25 * nestProgress;
+          const pNestY = 30 * nestProgress;
+
+          const qP_open = clamp(qP_pack / 0.35);
+          pBoxOpen.style.opacity = (qP_open > 0 && qP_pack < 0.5) ? qP_open : 0;
+          pBoxOpen.style.transform = `translate3d(0, ${180 * (1 - smoothStep(qP_open))}px, 0) scale(1.05)`;
+
+          const qP_closed = clamp((qP_pack - 0.45) / 0.25);
+          pBoxClosed.style.opacity = qP_closed > 0 ? 1 : 0;
+
+          // Pizza plate hides into closed box
+          const pizzaFade = qP_pack >= 0.48 ? (1 - clamp((qP_pack - 0.48) / 0.1)) : 1;
+          pFull.style.opacity = (qP_main > 0.05 ? 1 : 0) * pizzaFade;
+          pFull.style.transform = `translate3d(0, ${pNestY}px, 0) scale(${pScale * pNestScale})`;
+
+          // Delivery Slide
+          const qP_launch = clamp((qP_pack - 0.7) / 0.3);
+          const launchXP = -window.innerWidth * 1.2 * Math.pow(qP_launch, 2.2);
+          pBoxClosed.style.transform = `translate3d(${launchXP}px, 0, 0) rotate(${-12 * qP_launch}deg) scale(1.05)`;
+        } else {
+          pBoxOpen.style.opacity = 0;
+          pBoxClosed.style.opacity = 0;
+        }
+
+        pizzaShadow.style.opacity = 0.2 + 0.45 * qP_main;
+      }
+
+      // ==========================================
+      // SCENE 3: BROASTED CHICKEN (p: 0 to 1 strictly from scroll)
+      // ==========================================
+      const rBr = sceneBroast.getBoundingClientRect();
+      if (rBr.bottom > -100 && rBr.top < H + 100) {
+        const pBr = clamp(-rBr.top / (rBr.height - H));
+
+        let stepBr = 0;
+        if (pBr >= 0.75) stepBr = 3;
+        else if (pBr >= 0.5) stepBr = 2;
+        else if (pBr >= 0.25) stepBr = 1;
+        else stepBr = 0;
+
+        if (stepBr !== lastBroastStep) {
+          lastBroastStep = stepBr;
+          const infoBr = broastStepsInfo[stepBr];
+          document.getElementById('broastStepTag').textContent = infoBr.tag;
+          document.getElementById('broastStepName').textContent = infoBr.name;
+          document.getElementById('broastStepDesc').textContent = infoBr.desc;
+          broastDots.forEach((d, i) => d.classList.toggle('active', i === stepBr));
+          playFoleySound(280 + stepBr * 60, 480, 0.12);
+        }
+
+        // Broast Board Assembly Motion
+        const qBr_main = clamp(pBr / 0.45);
+        const eBr_main = easeOutBack(qBr_main);
+        const brScale = 0.75 + 0.25 * eBr_main;
+        const brRot = -20 * (1 - eBr_main);
+        const brY = -280 * (1 - eBr_main);
+
+        brFull.style.opacity = qBr_main > 0.05 ? 1 : 0;
+        brFull.style.transform = `translate3d(0, ${brY}px, 0) rotate(${brRot}deg) scale(${brScale})`;
+
+        // Broast Packaging & Delivery
+        const qBr_pack = clamp((pBr - 0.55) / 0.45);
+        if (qBr_pack > 0) {
+          const nestProgress = clamp(qBr_pack / 0.35);
+          const brNestScale = 1 - 0.25 * nestProgress;
+          const brNestY = 30 * nestProgress;
+
+          const qBr_open = clamp(qBr_pack / 0.35);
+          brBoxOpen.style.opacity = (qBr_open > 0 && qBr_pack < 0.5) ? qBr_open : 0;
+          brBoxOpen.style.transform = `translate3d(0, ${180 * (1 - smoothStep(qBr_open))}px, 0) scale(1.05)`;
+
+          const qBr_closed = clamp((qBr_pack - 0.45) / 0.25);
+          brBoxClosed.style.opacity = qBr_closed > 0 ? 1 : 0;
+
+          // Broast hides into box
+          const broastFade = qBr_pack >= 0.48 ? (1 - clamp((qBr_pack - 0.48) / 0.1)) : 1;
+          brFull.style.opacity = (qBr_main > 0.05 ? 1 : 0) * broastFade;
+          brFull.style.transform = `translate3d(0, ${brNestY}px, 0) scale(${brScale * brNestScale})`;
+
+          // Delivery Slide
+          const qBr_launch = clamp((qBr_pack - 0.7) / 0.3);
+          const launchXBr = -window.innerWidth * 1.2 * Math.pow(qBr_launch, 2.2);
+          brBoxClosed.style.transform = `translate3d(${launchXBr}px, 0, 0) rotate(${-12 * qBr_launch}deg) scale(1.05)`;
+        } else {
+          brBoxOpen.style.opacity = 0;
+          brBoxClosed.style.opacity = 0;
+        }
+
+        broastShadow.style.opacity = 0.2 + 0.45 * qBr_main;
+      }
+    }
+
+    window.addEventListener('scroll', onScrollTick, { passive: true });
+    window.addEventListener('resize', onScrollTick);
+    onScrollTick();
+
+    function scrollToScene(sceneNum) {
+      initAudio();
+      const targets = [sceneBurger, scenePizza, sceneBroast];
+      const target = targets[sceneNum - 1] || sceneBurger;
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* ========================================================
+       2. INTERACTIVE CART & WHATSAPP CHECKOUT
+       ======================================================== */
+    let cart = [];
+
+    function addToCart(id, name, price, img) {
+      initAudio();
+      playFoleySound(520, 780, 0.15);
+
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id, name, price, img, qty: 1 });
+      }
+
+      updateCart();
+      openCart();
+    }
+
+    function changeQty(id, delta) {
+      initAudio();
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(i => i.id !== id);
+      }
+
+      updateCart();
+      playFoleySound(400, 500, 0.1);
+    }
+
+    function updateCart() {
+      const container = document.getElementById('cartItemsContainer');
+      const badge = document.getElementById('cartCountBadge');
+
+      const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+      badge.textContent = totalItems;
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:50px 20px; color:var(--fg-muted);">
+            <div style="font-size:3rem; margin-bottom:12px;">🛒</div>
+            <h4 style="font-size:1.3rem; font-weight:800; color:var(--fg-title); margin-bottom:6px;">سلتك فارغة</h4>
+            <p>اختر وجبتك المفضلة من المشاهد أعلاه لبدء الطلب.</p>
+          </div>
+        `;
+        document.getElementById('cartSubtotalText').textContent = '٠ ر.س';
+        document.getElementById('cartTaxText').textContent = '٠ ر.س';
+        document.getElementById('cartGrandTotalText').textContent = '٠ ر.س';
+        return;
+      }
+
+      container.innerHTML = '';
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
+
+        const row = document.createElement('div');
+        row.className = 'cart-row-item';
+        row.innerHTML = `
+          <img src="${item.img}" alt="${item.name}" class="cart-row-img">
+          <div class="cart-row-info">
+            <h4 class="cart-row-title">${item.name}</h4>
+            <span class="cart-row-price">${item.price} ر.س</span>
+          </div>
+          <div class="cart-counter">
+            <button class="counter-btn" onclick="changeQty('${item.id}', -1)">−</button>
+            <span style="font-weight:800;">${item.qty}</span>
+            <button class="counter-btn" onclick="changeQty('${item.id}', 1)">+</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      const tax = Math.round(subtotal * 0.15);
+      const grandTotal = subtotal + tax;
+
+      document.getElementById('cartSubtotalText').textContent = subtotal + ' ر.س';
+      document.getElementById('cartTaxText').textContent = tax + ' ر.س';
+      document.getElementById('cartGrandTotalText').textContent = grandTotal + ' ر.س';
+    }
+
+    function openCart() {
+      initAudio();
+      document.getElementById('cartBackdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart(e) {
+      if (e) e.stopPropagation();
+      document.getElementById('cartBackdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function sendWhatsAppCheckout() {
+      if (cart.length === 0) {
+        alert('يرجى إضافة وجبة للسلة أولاً');
+        return;
+      }
+
+      initAudio();
+      playFoleySound(600, 900, 0.2);
+
+      const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      const tax = Math.round(subtotal * 0.15);
+      const grandTotal = subtotal + tax;
+
+      let msg = `مرحباً مطعم لقمة! 🛵✨\nأود تأكيد طلب جديد عبر موقع السكرول:\n\n`;
+      cart.forEach(item => {
+        msg += `• ${item.qty}x ${item.name} (${item.price * item.qty} ر.س)\n`;
+      });
+      msg += `\nالمجموع الفرعي: ${subtotal} ر.س`;
+      msg += `\nالضريبة (١٥٪): ${tax} ر.س`;
+      msg += `\nالإجمالي المطلوب: ${grandTotal} ريال سعودي 💰`;
+      msg += `\n\nيرجى تأكيد استلام الطلب وتجهيز البوكس للتوصيل!`;
+
+      const phone = "966500000000"; // Can be updated to verified business line
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+      closeCart();
+    }
+
+    /* ========================================================
+       3. THEME & SOUND CONTROLS
+       ======================================================== */
+    const themeBtn = document.getElementById('themeBtn');
+    let isDark = false;
+    themeBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'warm');
+      themeBtn.textContent = isDark ? '🌙' : '☀️';
+      playFoleySound(450, 700, 0.1);
+    });
+
+    const soundBtn = document.getElementById('soundBtn');
+    soundBtn.addEventListener('click', () => {
+      initAudio();
+      audioMuted = !audioMuted;
+      soundBtn.textContent = audioMuted ? '🔇' : '🔊';
+      if (!audioMuted) playFoleySound(500, 750, 0.1);
+    });
+
+    window.addEventListener('click', () => initAudio(), { once: true });
+    window.addEventListener('scroll', () => initAudio(), { once: true });
+  </script>
+</body>
+</html>

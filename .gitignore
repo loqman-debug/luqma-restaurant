@@ -1,0 +1,17 @@
+# Temporary inspection & test artifacts
+test_*.png
+verify_*.png
+screenshot_*.png
+*.bak*
+
+# Python caches & virtual environments
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# OS metadata
+.DS_Store
+Thumbs.db
