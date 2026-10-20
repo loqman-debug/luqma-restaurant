@@ -211,11 +211,12 @@
     }
 
     .hero-title {
-      font-size: clamp(3.4rem, 10vw, 7.5rem);
+      font-size: clamp(3.2rem, 7.5vw, 6.25rem);
       font-weight: 900;
       line-height: 1.05;
       color: var(--fg-title);
       margin-bottom: 20px;
+      max-width: 900px;
     }
 
     .hero-title span {
@@ -254,6 +255,7 @@
       transform: translateY(-3px);
       box-shadow: var(--shadow-float);
     }
+
     .mouse-wheel-anim {
       width: 24px;
       height: 38px;
@@ -282,12 +284,17 @@
        SCROLL-DRIVEN SCENES CONTAINER
        ======================================================== */
     .scene-block {
+      --scene-progress: 0;
+      --delivery-progress: 0;
+      --scene-glow: 244, 140, 6;
       position: relative;
       /* 380vh gives enough comfortable scroll distance for each meal */
       height: 380vh;
-      background: var(--bg);
+      background: radial-gradient(ellipse at 73% 50%, rgba(var(--scene-glow), calc(.035 + var(--scene-progress) * .16)), transparent 57%), var(--bg);
       border-top: 1px solid var(--border-warm);
     }
+    #scenePizza { --scene-glow: 224, 87, 39; }
+    #sceneBroast { --scene-glow: 225, 154, 38; }
 
     .scene-sticky-stage {
       position: sticky;
@@ -300,6 +307,17 @@
       padding: 0 6vw;
       overflow: hidden;
       perspective: 1200px;
+      background: linear-gradient(105deg, transparent 36%, rgba(255,255,255,calc(var(--scene-progress) * .22)) 100%);
+    }
+    .scene-sticky-stage::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: calc(var(--delivery-progress) * .42);
+      background: repeating-linear-gradient(166deg, transparent 0 28px, rgba(var(--scene-glow), .42) 29px 30px, transparent 31px 62px);
+      transform: translateX(calc(var(--delivery-progress) * -16%));
+      transition: opacity .08s linear;
     }
 
     /* HUD Narrative Column */
@@ -309,6 +327,7 @@
       display: flex;
       flex-direction: column;
       gap: 18px;
+      transform: translateY(calc((.5 - var(--scene-progress)) * 12px));
     }
 
     .hud-step-tag {
@@ -364,6 +383,7 @@
       padding: 24px;
       box-shadow: var(--shadow-soft);
       position: relative;
+      border-right: 3px solid rgba(var(--scene-glow), .52);
     }
 
     .hud-step-name {
@@ -432,6 +452,7 @@
       align-items: center;
       justify-content: center;
       perspective: 1200px;
+      z-index: 1;
     }
 
     .food-3d-wrapper {
@@ -440,6 +461,7 @@
       height: min(520px, 80vw);
       transform-style: preserve-3d;
       will-change: transform;
+      filter: saturate(calc(1 + var(--scene-progress) * .08));
     }
 
     .ground-ambient-shadow {
@@ -452,7 +474,7 @@
       background: radial-gradient(ellipse, rgba(42, 22, 11, 0.25) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
-      transition: transform 0.15s linear;
+      transition: transform 0.08s linear;
     }
 
     .photo-layer {
@@ -473,8 +495,12 @@
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 16px 26px rgba(42, 22, 11, 0.18));
+      filter: drop-shadow(0 18px 30px rgba(42, 22, 11, 0.22));
       user-select: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
     }
 
     /* Z-index layering for food nesting into packaging */
@@ -1094,6 +1120,17 @@
     };
     const smoothStep = t => t * t * (3 - 2 * t);
 
+    function updateSceneAtmosphere(scene, wrapper, shadow, progress, deliveryProgress) {
+      scene.style.setProperty('--scene-progress', progress.toFixed(3));
+      scene.style.setProperty('--delivery-progress', deliveryProgress.toFixed(3));
+
+      const cameraDrift = (0.5 - progress) * 18;
+      const cameraLift = Math.sin(progress * Math.PI) * -10;
+      const cameraTurn = (0.5 - progress) * 5;
+      wrapper.style.transform = `translate3d(${cameraDrift}px, ${cameraLift}px, 0) rotateY(${cameraTurn}deg)`;
+      shadow.style.transform = `translateX(-50%) scale(${0.88 + progress * 0.16})`;
+    }
+
     // Burger Elements
     const sceneBurger = document.getElementById('sceneBurger');
     const bBunBottom = document.getElementById('b-bun-bottom');
@@ -1289,13 +1326,15 @@
           // Delivery Launch Slide for Closed Box
           const q5_launch = clamp((q5 - 0.68) / 0.32);
           const launchX = -window.innerWidth * 1.2 * Math.pow(q5_launch, 2.2);
-          bBoxClosed.style.transform = `translate3d(${launchX}px, 0, 0) rotate(${-12 * q5_launch}deg) scale(1.05)`;
+          const seal = smoothStep(q5_closed);
+          bBoxClosed.style.transform = `translate3d(${launchX}px, ${-9 * (1 - seal)}px, 0) rotate(${-12 * q5_launch}deg) scale(${0.94 + 0.11 * seal})`;
         } else {
           bBoxOpen.style.opacity = 0;
           bBoxClosed.style.opacity = 0;
         }
 
         burgerShadow.style.opacity = 0.25 + 0.4 * q0 + 0.15 * q4;
+        updateSceneAtmosphere(sceneBurger, burger3D, burgerShadow, p, q5);
       }
 
       // ==========================================
@@ -1353,13 +1392,15 @@
           // Delivery Slide
           const qP_launch = clamp((qP_pack - 0.7) / 0.3);
           const launchXP = -window.innerWidth * 1.2 * Math.pow(qP_launch, 2.2);
-          pBoxClosed.style.transform = `translate3d(${launchXP}px, 0, 0) rotate(${-12 * qP_launch}deg) scale(1.05)`;
+          const pizzaSeal = smoothStep(qP_closed);
+          pBoxClosed.style.transform = `translate3d(${launchXP}px, ${-9 * (1 - pizzaSeal)}px, 0) rotate(${-12 * qP_launch}deg) scale(${0.94 + 0.11 * pizzaSeal})`;
         } else {
           pBoxOpen.style.opacity = 0;
           pBoxClosed.style.opacity = 0;
         }
 
         pizzaShadow.style.opacity = 0.2 + 0.45 * qP_main;
+        updateSceneAtmosphere(scenePizza, pizza3D, pizzaShadow, pP, qP_pack);
       }
 
       // ==========================================
@@ -1417,18 +1458,28 @@
           // Delivery Slide
           const qBr_launch = clamp((qBr_pack - 0.7) / 0.3);
           const launchXBr = -window.innerWidth * 1.2 * Math.pow(qBr_launch, 2.2);
-          brBoxClosed.style.transform = `translate3d(${launchXBr}px, 0, 0) rotate(${-12 * qBr_launch}deg) scale(1.05)`;
+          const broastSeal = smoothStep(qBr_closed);
+          brBoxClosed.style.transform = `translate3d(${launchXBr}px, ${-9 * (1 - broastSeal)}px, 0) rotate(${-12 * qBr_launch}deg) scale(${0.94 + 0.11 * broastSeal})`;
         } else {
           brBoxOpen.style.opacity = 0;
           brBoxClosed.style.opacity = 0;
         }
 
         broastShadow.style.opacity = 0.2 + 0.45 * qBr_main;
+        updateSceneAtmosphere(sceneBroast, broast3D, broastShadow, pBr, qBr_pack);
       }
     }
 
-    window.addEventListener('scroll', onScrollTick, { passive: true });
-    window.addEventListener('resize', onScrollTick);
+    let scrollFrame = 0;
+    function requestScrollTick() {
+      if (scrollFrame) return;
+      scrollFrame = requestAnimationFrame(() => {
+        scrollFrame = 0;
+        onScrollTick();
+      });
+    }
+    window.addEventListener('scroll', requestScrollTick, { passive: true });
+    window.addEventListener('resize', requestScrollTick);
     onScrollTick();
 
     function scrollToScene(sceneNum) {
@@ -1559,7 +1610,7 @@
       msg += `\nالإجمالي المطلوب: ${grandTotal} ريال سعودي 💰`;
       msg += `\n\nيرجى تأكيد استلام الطلب وتجهيز البوكس للتوصيل!`;
 
-      const phone = "966500000000"; // Can be updated to verified business line
+      const phone = "967772350130";
       window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
       closeCart();
     }
@@ -1586,6 +1637,10 @@
 
     window.addEventListener('click', () => initAudio(), { once: true });
     window.addEventListener('scroll', () => initAudio(), { once: true });
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeCart();
+    });
+    updateCart();
   </script>
 </body>
 </html>
