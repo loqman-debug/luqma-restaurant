@@ -795,9 +795,9 @@
       </a>
 
       <nav class="chapter-nav" aria-label="اختيار الوجبة">
-        <button class="chapter-chip active" id="chipBurger" type="button" onclick="selectDish('burger')">برجر اللهب</button>
-        <button class="chapter-chip" id="chipPizza" type="button" onclick="selectDish('pizza')">بيتزا الحجر</button>
-        <button class="chapter-chip" id="chipBroast" type="button" onclick="selectDish('broast')">بروستد مقرمش</button>
+        <button class="chapter-chip active" id="chipBurger" type="button" onclick="jumpTo(1)">برجر اللهب</button>
+        <button class="chapter-chip" id="chipPizza" type="button" onclick="jumpTo(2)">بيتزا الحجر</button>
+        <button class="chapter-chip" id="chipBroast" type="button" onclick="jumpTo(3)">بروستد مقرمش</button>
       </nav>
 
       <div class="nav-tools">
@@ -847,9 +847,18 @@
             <img src="assets/box_open.png" alt="صندوق لقمة مفتوح">
           </div>
 
-          <!-- Real Gourmet Angus Burger -->
-          <div class="layer-canvas layer-food-stack" id="b-full">
-            <img src="assets/burger_plate.png" alt="برجر أنجوس لقمة المشوي">
+          <!-- Real Gourmet Angus Layers (Sourced from Real Burger) -->
+          <div class="layer-canvas layer-food-stack" id="b-bun-bottom">
+            <img src="assets/real_bun_bottom.png" alt="قاعدة البريوش المحمصة">
+          </div>
+          <div class="layer-canvas layer-food-stack" id="b-veg">
+            <img src="assets/real_veg.png" alt="الخس المقرمش وشرائح الطماطم">
+          </div>
+          <div class="layer-canvas layer-food-stack" id="b-patty">
+            <img src="assets/real_patty.png" alt="شريحة الأنجوس والجبن الذائب">
+          </div>
+          <div class="layer-canvas layer-food-stack" id="b-bun-top">
+            <img src="assets/real_bun_top.png" alt="تاج البريوش الذهبي">
           </div>
 
           <!-- Closed Sealed Box (on top) -->
@@ -1052,7 +1061,10 @@
     const sceneBurger = document.getElementById('sceneBurger');
     const burgerArena = document.getElementById('burgerArena');
     const burgerShadow = document.getElementById('burgerShadow');
-    const bFull = document.getElementById('b-full');
+    const bBunBottom = document.getElementById('b-bun-bottom');
+    const bVeg = document.getElementById('b-veg');
+    const bPatty = document.getElementById('b-patty');
+    const bBunTop = document.getElementById('b-bun-top');
     const bBoxOpen = document.getElementById('b-box-open');
     const bBoxClosed = document.getElementById('b-box-closed');
     const burgerCapsule = document.getElementById('burgerCapsule');
@@ -1090,38 +1102,16 @@
     let lastPizzaBeat = -1;
     let lastBroastBeat = -1;
 
-    const dishScenes = {
-      burger: sceneBurger,
-      pizza: scenePizza,
-      broast: sceneBroast
-    };
-    const dishChips = {
-      burger: chipBurger,
-      pizza: chipPizza,
-      broast: chipBroast
-    };
-
-    function renderSelectedDish() {
-      Object.entries(dishScenes).forEach(([dish, scene]) => {
-        scene.hidden = dish !== selectedDish;
-      });
-      Object.entries(dishChips).forEach(([dish, chip]) => {
-        const isSelected = dish === selectedDish;
-        chip.classList.toggle('active', isSelected);
-        chip.setAttribute('aria-pressed', String(isSelected));
-      });
-    }
-
-    function selectDish(dish, shouldScroll = true) {
-      if (!dishScenes[dish]) return;
-      selectedDish = dish;
-      renderSelectedDish();
-      requestAnimationFrame(() => {
-        onScrollTick();
-        if (shouldScroll) {
-          window.scrollTo({ top: dishScenes[dish].offsetTop, behavior: 'smooth' });
-        }
-      });
+    function jumpTo(sceneNum) {
+      initAudio();
+      let target = null;
+      if (sceneNum === 1) target = sceneBurger;
+      else if (sceneNum === 2) target = scenePizza;
+      else if (sceneNum === 3) target = sceneBroast;
+      if (target) {
+        const top = target.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
     }
 
     // Procedural Audio Engine
@@ -1167,25 +1157,32 @@
       // SCENE 1: BURGER (p: 0 -> 1)
       // ==========================================
       const rB = sceneBurger.getBoundingClientRect();
-      if (selectedDish === 'burger' && rB.bottom > -100 && rB.top < H + 100) {
+      if (rB.bottom > -100 && rB.top < H + 100) {
         const p = clamp(-rB.top / (rB.height - H));
 
+        // Subtitles & Story Beats
         let beat = 0;
         let subText = "";
         let isHero = false;
 
-        if (p < 0.25) {
+        if (p < 0.20) {
           beat = 0;
-          subText = "خبز بريوش طازج محمص بزبدة طبيعية فاخرة";
-        } else if (p < 0.50) {
+          subText = "قاعدة البريوش تهبط برائحة الزبدة الفاخرة";
+        } else if (p < 0.38) {
           beat = 1;
-          subText = "شريحة أنجوس مشوية على اللهب بشيدر أمريكية ذائبة";
-        } else if (p < 0.72) {
+          subText = "خس لولوروسو المقرمش مع شرائح الطماطم الطازجة";
+        } else if (p < 0.55) {
           beat = 2;
+          subText = "شريحة أنجوس مشوية مع شيدر أمريكية ذائبة";
+        } else if (p < 0.70) {
+          beat = 3;
+          subText = "تاج البريوش بالسمسم يُحكم الطبقات بانضغاط خفيف";
+        } else if (p < 0.82) {
+          beat = 4;
           isHero = true;
           subText = ""; // Full hero moment
         } else {
-          beat = 3;
+          beat = 5;
           subText = "تستقر في بوكس لقمة المختوم وتنطلق لبابك 🛵";
         }
 
@@ -1200,29 +1197,44 @@
         burgerCapsule.style.transform = isHero ? "translateY(16px)" : "translateY(0)";
 
         // Hero Order Pill visibility
-        if (p >= 0.50 && p < 0.76) {
+        if (p >= 0.68 && p < 0.84) {
           burgerOrderPill.classList.add('visible');
         } else {
           burgerOrderPill.classList.remove('visible');
         }
 
-        // Burger Entry: Natural physical arrival with gentle bounce and rotation
-        const qB_main = clamp(p / 0.42);
-        const eB_main = easeOutBack(qB_main);
-        const bScale = 0.78 + 0.22 * eB_main;
-        const bRot = -8 * (1 - eB_main);
-        const bY = -240 * (1 - eB_main);
+        // Layer 0: Bun Bottom
+        const q0 = clamp(p / 0.18);
+        const e0 = easeOutBack(q0);
+        bBunBottom.style.opacity = q0 > 0.05 ? 1 : 0;
+        bBunBottom.style.transform = `translate3d(0, ${-180 * (1 - e0)}px, 0) scale(${0.85 + 0.15 * e0})`;
 
-        bFull.style.opacity = qB_main > 0.05 ? 1 : 0;
-        bFull.style.transform = `translate3d(0, ${bY}px, 0) rotate(${bRot}deg) scale(${bScale})`;
+        // Layer 1: Lettuce & Tomato (Flies in from right with rotation)
+        const q1 = clamp((p - 0.16) / 0.18);
+        const e1 = easeOutBack(q1);
+        bVeg.style.opacity = q1 > 0 ? 1 : 0;
+        bVeg.style.transform = `translate3d(${60 * (1 - e1)}px, ${-260 * (1 - e1)}px, 0) rotate(${12 * (1 - e1)}deg) scale(${0.85 + 0.15 * e1})`;
 
-        // Hero breathing zoom
-        const heroProgress = clamp((p - 0.48) / 0.22);
+        // Layer 2: Angus Patty & Melted Cheddar (Drops from left with heavy landing)
+        const q2 = clamp((p - 0.32) / 0.18);
+        const e2 = easeOutBack(q2);
+        bPatty.style.opacity = q2 > 0 ? 1 : 0;
+        bPatty.style.transform = `translate3d(${-60 * (1 - e2)}px, ${-300 * (1 - e2)}px, 0) rotate(${-10 * (1 - e2)}deg) scale(${0.85 + 0.15 * e2})`;
+
+        // Layer 3: Bun Top Crown (Drops directly above and squishes on assembly)
+        const q3 = clamp((p - 0.48) / 0.18);
+        const e3 = easeOutBack(q3);
+        const squish = (q3 > 0.82 && q3 < 0.98) ? Math.sin((q3 - 0.82) / 0.16 * Math.PI) * 0.07 : 0;
+        bBunTop.style.opacity = q3 > 0 ? 1 : 0;
+        bBunTop.style.transform = `translate3d(0, ${-360 * (1 - e3)}px, 0) scale(${1 + squish * 0.6}, ${1 - squish})`;
+
+        // Hero zoom breathing (at p: 0.70..0.82)
+        const heroProgress = clamp((p - 0.70) / 0.12);
         const heroZoom = (heroProgress > 0 && heroProgress < 1) ? (1 + 0.10 * Math.sin(heroProgress * Math.PI)) : 1;
         burgerArena.style.transform = `scale(${heroZoom})`;
 
-        // Packaging & Launch (p: 0.72 -> 1.0)
-        const qPack = clamp((p - 0.72) / 0.28);
+        // Packaging & Launch (p: 0.82 -> 1.0)
+        const qPack = clamp((p - 0.82) / 0.18);
         if (qPack > 0) {
           const boxRise = clamp(qPack / 0.35);
           bBoxOpen.style.opacity = (boxRise > 0 && qPack < 0.55) ? boxRise : 0;
@@ -1233,8 +1245,10 @@
           const bNestY = 22 * nest;
           const burgerFade = qPack >= 0.52 ? (1 - clamp((qPack - 0.52) / 0.08)) : 1;
 
-          bFull.style.opacity = (qB_main > 0.05 ? 1 : 0) * burgerFade;
-          bFull.style.transform = `translate3d(0, ${bNestY}px, 0) scale(${bScale * bNestScale})`;
+          [bBunBottom, bVeg, bPatty, bBunTop].forEach(layer => {
+            layer.style.opacity = burgerFade;
+            layer.style.transform = `translate3d(0, ${bNestY}px, 0) scale(${bNestScale})`;
+          });
 
           const qClosed = clamp((qPack - 0.48) / 0.22);
           bBoxClosed.style.opacity = qClosed > 0 ? 1 : 0;
@@ -1250,14 +1264,14 @@
           burgerWipe.style.opacity = 0;
         }
 
-        burgerShadow.style.opacity = 0.2 + 0.45 * qB_main;
+        burgerShadow.style.opacity = 0.2 + 0.45 * q0 + 0.15 * q3;
       }
 
       // ==========================================
       // SCENE 2: PIZZA (pP: 0 -> 1)
       // ==========================================
       const rP = scenePizza.getBoundingClientRect();
-      if (selectedDish === 'pizza' && rP.bottom > -100 && rP.top < H + 100) {
+      if (rP.bottom > -100 && rP.top < H + 100) {
         const pP = clamp(-rP.top / (rP.height - H));
 
         let beatP = 0;
@@ -1345,7 +1359,7 @@
       // SCENE 3: BROASTED CHICKEN (pBr: 0 -> 1)
       // ==========================================
       const rBr = sceneBroast.getBoundingClientRect();
-      if (selectedDish === 'broast' && rBr.bottom > -100 && rBr.top < H + 100) {
+      if (rBr.bottom > -100 && rBr.top < H + 100) {
         const pBr = clamp(-rBr.top / (rBr.height - H));
 
         let beatBr = 0;
@@ -1443,14 +1457,7 @@
       }
     }, { passive: true });
     window.addEventListener('resize', onScrollTick);
-    renderSelectedDish();
     onScrollTick();
-
-    function jumpTo(sceneNum) {
-      initAudio();
-      const dish = ['burger', 'pizza', 'broast'][sceneNum - 1];
-      if (dish) selectDish(dish);
-    }
 
     /* ========================================================
        2. CART STATE & WHATSAPP DIRECT CHECKOUT
