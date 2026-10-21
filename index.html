@@ -432,6 +432,308 @@
       filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
     }
 
+    /* Ambient Canvas Embers */
+    #ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Interactive Dish Customizer */
+    .customizer-box {
+      margin-top: 14px;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .customizer-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .customizer-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .cust-chip {
+      appearance: none;
+      border: 1px solid var(--border-glass);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--fg-body);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .cust-chip:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .cust-chip.selected {
+      background: rgba(244, 140, 6, 0.25);
+      border-color: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(244, 140, 6, 0.4);
+    }
+
+    .cust-chip .chip-check {
+      display: none;
+      font-weight: 900;
+      color: var(--accent-gold);
+    }
+
+    .cust-chip.selected .chip-check {
+      display: inline;
+    }
+
+    /* Bento Grid Section (Magic UI & shadcn/ui) */
+    .bento-section {
+      padding: 100px 6vw 60px;
+      max-width: 1300px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .bento-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .bento-header h2 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 900;
+      color: var(--fg-title);
+      line-height: 1.2;
+    }
+
+    .bento-header p {
+      font-size: 1.15rem;
+      color: var(--fg-muted);
+      margin-top: 10px;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    @media(max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width: 640px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bento-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-active);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 24px var(--accent-glow);
+    }
+
+    .bento-card-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      width: 68px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(244, 140, 6, 0.12);
+      border-radius: 16px;
+      border: 1px solid rgba(244, 140, 6, 0.25);
+    }
+
+    .bento-card h3 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--fg-title);
+      margin-bottom: 6px;
+    }
+
+    .bento-card p {
+      font-size: 0.95rem;
+      color: var(--fg-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .bento-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-glass);
+    }
+
+    .bento-price {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+    }
+
+    .btn-bento-add {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-glass);
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-bento-add:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* Magic UI Marquee Reviews */
+    .marquee-section {
+      padding: 70px 0 100px;
+      overflow: hidden;
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(180deg, transparent, rgba(20, 13, 8, 0.6) 30%, transparent);
+    }
+
+    .marquee-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .marquee-header h3 {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: var(--fg-title);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 24px;
+      animation: marqueeScroll 35s linear infinite;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(50%); }
+    }
+
+    .review-card {
+      width: 360px;
+      background: rgba(26, 16, 10, 0.7);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 18px;
+      padding: 22px 24px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .review-stars {
+      color: #ffba08;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      font-size: 1.05rem;
+      color: var(--fg-body);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .author-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-deep));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .author-name {
+      font-weight: 800;
+      color: var(--fg-title);
+      font-size: 0.95rem;
+    }
+
+    .author-city {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+    }
+
     /* Outro */
     .outro {
       min-height: 100vh;
@@ -716,6 +1018,9 @@
 </head>
 <body>
 
+  <!-- Ambient Glowing Embers Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
   <!-- Top Progress Bar -->
   <div id="bar"></div>
 
@@ -755,6 +1060,174 @@
 
     <!-- CONTAINER FOR THE 3 DYNAMIC SCENES -->
     <div id="scenes"></div>
+
+    <!-- BENTO GRID FOR SIDES & DRINKS (Magic UI & shadcn/ui) -->
+    <section class="bento-section" id="sides-section">
+      <div class="bento-header">
+        <h2>مقبّلات ومشروبات تُكمّل لقمّتك</h2>
+        <p>مُحضرة طازجة يومياً مع كل طلب لتكتمل متعة الوجبة</p>
+      </div>
+
+      <div class="bento-grid">
+        <!-- 1. Truffle Fries -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-card-icon">🍟</div>
+            <h3>بطاطس الكمأة الملكية</h3>
+            <p>أصابع بطاطس مقرمشة مغطاة ببرش جبن البارميزان المعتق ورذاذ زيت الكمأة الأسود الإيطالي.</p>
+          </div>
+          <div class="bento-card-footer">
+            <span class="bento-price">١٨ ر.س</span>
+            <button class="btn-bento-add" onclick="addToCart('truffle-fries', 'بطاطس الكمأة الملكية', 18, '🍟')">
+              <span>+ أضف للسلة</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Trio Dips -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-card-icon">🥣</div>
+            <h3>صوصات لقمة الثلاثية</h3>
+            <p>ثلاثة صوصات فاخرة: صوص لقمة السري المدخن، ثومية لقمة الحريرية، ورانش الأعشاب الطازجة.</p>
+          </div>
+          <div class="bento-card-footer">
+            <span class="bento-price">٨ ر.س</span>
+            <button class="btn-bento-add" onclick="addToCart('trio-dips', 'صوصات لقمة الثلاثية', 8, '🥣')">
+              <span>+ أضف للسلة</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Glazed Wings -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-card-icon">🍗</div>
+            <h3>أجنحة لقمة المقرمشة</h3>
+            <p>٦ قطع من الأجنحة المقلية المتبلة ببهاراتنا السرية مع تغليفة صوص البافلو والعسل.</p>
+          </div>
+          <div class="bento-card-footer">
+            <span class="bento-price">٢٤ ر.س</span>
+            <button class="btn-bento-add" onclick="addToCart('glazed-wings', 'أجنحة لقمة المقرمشة', 24, '🍗')">
+              <span>+ أضف للسلة</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. Berry Sparkler -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-card-icon">🍹</div>
+            <h3>موهيتو التوت والرمان</h3>
+            <p>عصير غازي منعش مع التوت البري والرمان وأوراق النعناع الطازجة ومكعبات الثلج.</p>
+          </div>
+          <div class="bento-card-footer">
+            <span class="bento-price">١٤ ر.س</span>
+            <button class="btn-bento-add" onclick="addToCart('berry-mojito', 'موهيتو التوت والرمان', 14, '🍹')">
+              <span>+ أضف للسلة</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAGIC UI MARQUEE: REVIEWS & SOCIAL PROOF -->
+    <section class="marquee-section" id="reviews-section">
+      <div class="marquee-header">
+        <h3>ماذا يقول عُشاق لقمة؟ ⭐</h3>
+      </div>
+      <div class="marquee-track">
+        <!-- Review 1 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«البرجر خرافي والخبز البريوش يذوب بالفم، وتغليف البوكس مع الختم كأنه هدية ملكية فخمة!»</div>
+          <div class="review-author">
+            <div class="author-avatar">م</div>
+            <div>
+              <div class="author-name">مهند اليافعي</div>
+              <div class="author-city">عميل دائم</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«وصل حار ومقرمش في أقل من ٢٥ دقيقة، والثومية حق البروستد لا يعلى عليها إطلاقاً.»</div>
+          <div class="review-author">
+            <div class="author-avatar">ر</div>
+            <div>
+              <div class="author-name">ريم الكندي</div>
+              <div class="author-city">صنعاء / حدة</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«عجينة البيتزا خفيفة جداً ومحمرة على أطراف الحطب الإيطالي بموزاريلا طازجة. إتقان مذهل.»</div>
+          <div class="review-author">
+            <div class="author-avatar">ط</div>
+            <div>
+              <div class="author-name">طارق الصالح</div>
+              <div class="author-city">ناقد طعام</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«تجربة السكرول بالموقع رهيبة، والطلب عبر الواتساب مباشر وسريع والتوصيل كان أسرع مما توقعت.»</div>
+          <div class="review-author">
+            <div class="author-avatar">و</div>
+            <div>
+              <div class="author-name">د. وائل عبدالسلام</div>
+              <div class="author-city">مهندس برمجيات</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«طعم اللحم الأنجوس مدخن وطازج ١٠٠٪، والبوكس حافظ على الحرارة كأنه توّه خارج من الشواية.»</div>
+          <div class="review-author">
+            <div class="author-avatar">ع</div>
+            <div>
+              <div class="author-name">عمر باحكيم</div>
+              <div class="author-city">عميل VIP</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duplicates for seamless infinite loop -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«البرجر خرافي والخبز البريوش يذوب بالفم، وتغليف البوكس مع الختم كأنه هدية ملكية فخمة!»</div>
+          <div class="review-author">
+            <div class="author-avatar">م</div>
+            <div>
+              <div class="author-name">مهند اليافعي</div>
+              <div class="author-city">عميل دائم</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«وصل حار ومقرمش في أقل من ٢٥ دقيقة، والثومية حق البروستد لا يعلى عليها إطلاقاً.»</div>
+          <div class="review-author">
+            <div class="author-avatar">ر</div>
+            <div>
+              <div class="author-name">ريم الكندي</div>
+              <div class="author-city">صنعاء / حدة</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- OUTRO / DESTINATION SECTION -->
     <section class="outro" id="outro">
@@ -911,6 +1384,12 @@
         icon: '🍔',
         dy: 0,
         steps: ['نجهّز قاعدة البريوش الفاخرة المحمصة', 'نرصّ شرائح الأنجوس والجبن الذائب'],
+        customizations: [
+          { id: 'extra-cheese', name: '🧀 جبن شيدر ذائب', price: 4 },
+          { id: 'extra-patty', name: '🥩 شريحة لحم ثانية', price: 12 },
+          { id: 'spicy-sauce', name: '🌶️ صوص مدخن حار', price: 0 }
+        ],
+        selectedCustoms: new Set(),
         it: [
           // 1. Bottom Bun
           `<g filter="url(#shadow-food)">
@@ -976,6 +1455,11 @@
         icon: '🍕',
         dy: -60,
         steps: ['نفرد العجينة النابولية يدوياً', 'نوزّع الصوص وموزاريلا البافلو'],
+        customizations: [
+          { id: 'extra-mozz', name: '🧀 موزاريلا بافلو مضاعفة', price: 8 },
+          { id: 'truffle-oil', name: '🌿 زيت كمأة إيطالي معتق', price: 6 }
+        ],
+        selectedCustoms: new Set(),
         it: [
           // 1. Dough Crust (Wood-fired rustic base)
           `<g filter="url(#shadow-food)">
@@ -1037,6 +1521,11 @@
         icon: '🍗',
         dy: -40,
         steps: ['نقلي الدجاج المقرمش بالضغط', 'نضيف أصابع البطاطس وثومية لقمة'],
+        customizations: [
+          { id: 'extra-garlic', name: '🥣 علبة ثومية إضافية', price: 3 },
+          { id: 'spicy-dust', name: '🌶️ تتبيلة حارة مضاعفة', price: 0 }
+        ],
+        selectedCustoms: new Set(),
         it: [
           // 1. Crispy French Fries Fan
           `<g filter="url(#shadow-food)">
@@ -1148,8 +1637,25 @@
               <i class="on"></i><i></i><i></i><i></i>
             </div>
 
+            <!-- Interactive Customizer Chips -->
+            <div class="customizer-box">
+              <div class="customizer-label">
+                <span>✨</span>
+                <span>تخصيص الإضافات حسب رغبتك:</span>
+              </div>
+              <div class="customizer-chips">
+                ${s.customizations.map(c => `
+                  <button type="button" class="cust-chip" onclick="toggleCustomizer('${s.id}', '${c.id}')" id="chip-${s.id}-${c.id}">
+                    <span class="chip-check">✓</span>
+                    <span>${c.name}</span>
+                    <span style="opacity:0.75; font-size:0.75rem;">(${c.price > 0 ? '+' + c.price + ' ر.س' : 'مجاناً'})</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
             <div class="txt-actions">
-              <button class="btn-quick-add" onclick="addToCart('${s.id}', '${s.t}', ${s.priceVal}, '${s.icon}')">
+              <button class="btn-quick-add" id="btn-add-${s.id}" onclick="addCustomizedToCart('${s.id}')">
                 <span>أضف للطلب • ${s.priceVal} ر.س</span>
                 <span>🛒</span>
               </button>
@@ -1332,6 +1838,130 @@
     window.addEventListener('scroll', tick, { passive: true });
     window.addEventListener('resize', tick);
     tick();
+
+    /* ========================================================
+       AMBIENT GLOWING EMBERS CANVAS (REACT BITS & MAGIC UI)
+       ======================================================== */
+    (function initAmbientCanvas() {
+      const cvs = document.getElementById('ambient-canvas');
+      if (!cvs) return;
+      const c = cvs.getContext('2d');
+      let w, h;
+      const embers = [];
+      const COUNT = 45;
+
+      function resize() {
+        w = cvs.width = window.innerWidth;
+        h = cvs.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      class Ember {
+        constructor() {
+          this.reset(true);
+        }
+        reset(initial = false) {
+          this.x = Math.random() * w;
+          this.y = initial ? Math.random() * h : h + 15;
+          this.size = Math.random() * 2.2 + 1;
+          this.speedY = Math.random() * 0.8 + 0.3;
+          this.speedX = (Math.random() - 0.5) * 0.4;
+          this.opacity = Math.random() * 0.55 + 0.2;
+          this.fade = Math.random() * 0.003 + 0.0015;
+          const colors = ['#f48c06', '#ffba08', '#dc2f02', '#fde047'];
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+        update() {
+          this.y -= this.speedY;
+          this.x += this.speedX + Math.sin(this.y * 0.015) * 0.25;
+          this.opacity -= this.fade;
+          if (this.y < -15 || this.opacity <= 0) {
+            this.reset();
+          }
+        }
+        draw() {
+          c.save();
+          c.globalAlpha = Math.max(0, this.opacity);
+          c.fillStyle = this.color;
+          c.shadowBlur = 8;
+          c.shadowColor = this.color;
+          c.beginPath();
+          c.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          c.fill();
+          c.restore();
+        }
+      }
+
+      for (let i = 0; i < COUNT; i++) {
+        embers.push(new Ember());
+      }
+
+      function loop() {
+        c.clearRect(0, 0, w, h);
+        for (let i = 0; i < embers.length; i++) {
+          embers[i].update();
+          embers[i].draw();
+        }
+        requestAnimationFrame(loop);
+      }
+      loop();
+    })();
+
+    /* ========================================================
+       INTERACTIVE CUSTOMIZER HANDLERS
+       ======================================================== */
+    function toggleCustomizer(sceneId, custId) {
+      initAudio();
+      playFoleySound(480, 680, 0.08);
+
+      const s = SC.find(item => item.id === sceneId);
+      if (!s) return;
+
+      const chip = document.getElementById(`chip-${sceneId}-${custId}`);
+      if (s.selectedCustoms.has(custId)) {
+        s.selectedCustoms.delete(custId);
+        if (chip) chip.classList.remove('selected');
+      } else {
+        s.selectedCustoms.add(custId);
+        if (chip) chip.classList.add('selected');
+      }
+
+      // Recalculate price
+      let extraTotal = 0;
+      s.selectedCustoms.forEach(cId => {
+        const c = s.customizations.find(opt => opt.id === cId);
+        if (c) extraTotal += c.price;
+      });
+
+      const currentTotal = s.priceVal + extraTotal;
+      const btn = document.getElementById(`btn-add-${sceneId}`);
+      if (btn) {
+        btn.querySelector('span:first-child').textContent = `أضف للطلب • ${currentTotal} ر.س`;
+      }
+    }
+
+    function addCustomizedToCart(sceneId) {
+      const s = SC.find(item => item.id === sceneId);
+      if (!s) return;
+
+      let extraTotal = 0;
+      const selectedNames = [];
+      s.selectedCustoms.forEach(cId => {
+        const c = s.customizations.find(opt => opt.id === cId);
+        if (c) {
+          extraTotal += c.price;
+          selectedNames.push(c.name);
+        }
+      });
+
+      const totalItemPrice = s.priceVal + extraTotal;
+      const customSuffix = selectedNames.length ? ` (${selectedNames.join(' + ')})` : '';
+      const fullItemTitle = s.t + customSuffix;
+      const uniqueId = s.id + (selectedNames.length ? '-' + [...s.selectedCustoms].sort().join('-') : '');
+
+      addToCart(uniqueId, fullItemTitle, totalItemPrice, s.icon);
+    }
 
     /* ========================================================
        CART STATE & DIRECT WHATSAPP CHECKOUT (+967772350130)
